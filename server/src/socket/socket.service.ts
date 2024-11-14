@@ -8,7 +8,7 @@ import {
     WebSocketServer,
 } from '@nestjs/websockets'
 import { Server, Socket } from 'socket.io'
-import { Cell, ChangeCellData, Room } from 'src/types'
+import { Cell, ChangeCellData, Room } from '../types'
 
 @WebSocketGateway({
     cors: {

@@ -6,3 +6,5 @@ export enum Paths {
     Rooms = '/rooms',
     Art = '/art',
 }
+
+export const serverPort = 8099

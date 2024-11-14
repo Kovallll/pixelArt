@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { PrismaService } from 'src/db/db.service'
+import { PrismaService } from '../db/db.service'
 
 @Injectable()
 export class UsersService {
@@ -24,6 +24,15 @@ export class UsersService {
     deleteUser(id: string) {
         return this.prisma.user.delete({
             where: { id },
+        })
+    }
+
+    async seed() {
+        await this.prisma.user.create({
+            data: {
+                userName: 'User',
+                password: '12321',
+            },
         })
     }
 }

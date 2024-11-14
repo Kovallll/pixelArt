@@ -1,0 +1,50 @@
+version: '3.7'
+
+services:
+    backend:
+        container_name: server
+        build:
+            context: ./server
+            dockerfile: Dockerfile
+            args:
+              - DATABASE_URL=${DATABASE_URL}
+        environment:
+            - DATABASE_URL=${DATABASE_URL}
+        ports:
+            - '8099:5000'
+        depends_on:
+            - db
+        restart: always
+
+    client:
+        container_name: client
+        build:
+            context: ./client
+            dockerfile: Dockerfile
+        ports:
+            - 8080:3000
+        depends_on:
+            - backend
+        restart: always
+
+    db:
+        container_name: db
+        image: postgres:latest
+        environment:
+            - POSTGRES_USER=${POSTGRES_USER}
+            - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+            - POSTGRES_DB=${POSTGRES_DB}
+        ports:
+            - '5432:5432'
+        expose:
+            - 5432
+        volumes:
+            - postgres-data:/var/lib/postgresql/data
+        restart: always
+
+networks:
+    backend:
+        driver: bridge
+
+volumes:
+    postgres-data:
